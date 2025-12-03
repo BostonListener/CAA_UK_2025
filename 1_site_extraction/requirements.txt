@@ -1,0 +1,24 @@
+# Web framework
+flask==3.0.0
+werkzeug==3.0.1
+
+# PDF processing
+pypdf==3.17.4
+
+# OpenAI API for LLM extraction
+openai==1.12.0
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Google Earth Engine
+earthengine-api==0.1.384
+google-auth==2.27.0
+google-auth-oauthlib==1.2.0
+
+# Data processing
+numpy==1.26.3
+scipy==1.11.4
+
+# Visualization
+matplotlib==3.8.2

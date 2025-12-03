@@ -1,0 +1,184 @@
+# ============================================================================
+# Archaeological Site Detection Dataset Pipeline - Configuration
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Google Earth Engine Configuration
+# ----------------------------------------------------------------------------
+gee:
+  project: 'caa-2025-2026'  # Your GEE project ID (required for API access)
+
+# ----------------------------------------------------------------------------
+# Remote Sensing Imagery Configuration
+# ----------------------------------------------------------------------------
+imagery:
+  # Sentinel-2 Surface Reflectance Configuration
+  sentinel2:
+    collection: 'COPERNICUS/S2_SR_HARMONIZED'   # Sentinel-2 collection ID
+    date_start: '2023-01-01'                    # Start date for imagery search
+    date_end: '2024-01-01'                      # End date for imagery search
+    cloud_cover_max: 20                         # Maximum cloud cover (%) - best image selected
+    bands:                                      # Spectral bands to extract
+      - 'B2'   # Blue (490nm)
+      - 'B3'   # Green (560nm)
+      - 'B4'   # Red (665nm)
+      - 'B8'   # NIR (842nm)
+      - 'B11'  # SWIR1 (1610nm) - resampled from 20m to 10m
+      - 'B12'  # SWIR2 (2190nm) - resampled from 20m to 10m
+    scale: 10  # Output resolution in meters (Sentinel-2 native resolution)
+    
+  # FABDEM Digital Elevation Model Configuration
+  fabdem:
+    collection: 'projects/sat-io/open-datasets/FABDEM'  # DEM collection (forest/building removed)
+    scale: 10  # Output resolution in meters (resampled from 30m)
+
+# ----------------------------------------------------------------------------
+# Grid Cell Configuration
+# ----------------------------------------------------------------------------
+grid:
+  cell_size_km: 1.0    # Size of each grid cell in kilometers (1km × 1km)
+  pixels_per_km: 100   # Pixel density (100 pixels/km = 10m resolution)
+                       # Final grid size: 100×100 pixels per channel
+
+# ----------------------------------------------------------------------------
+# Data Augmentation Configuration
+# ----------------------------------------------------------------------------
+augmentation:
+  # Rotation buffer for geometric augmentation
+  rotation_buffer_factor: 1.5  # Extract area multiplier (1.5× → 1.5km × 1.5km)
+                                # Prevents black corners after rotation
+  
+  # Rotation Generation (Geometric Augmentation)
+  rotation_generation:
+    enabled: true       # Enable/disable rotation augmentation
+    rotation_step: 30   # Rotation angle step in degrees
+                        # rotation_step: 120 → 3 rotations (0°, 120°, 240°)
+                        # rotation_step: 90  → 4 rotations (0°, 90°, 180°, 270°)
+                        # rotation_step: 60  → 6 rotations
+                        # rotation_step: 30  → 12 rotations
+                        # Formula: num_rotations = 360 / rotation_step
+  
+  # Radiometric Augmentation (Applied to rotated samples)
+  radiometric:
+    enabled: true  # Enable/disable radiometric augmentation
+    variants:      # List of augmentation variants to generate
+      - 'aug1'     # Bright variant: +8% brightness, +5% contrast, noise σ=0.015
+      - 'aug2'     # Dark variant: -8% brightness, -5% contrast, noise σ=0.015
+      - 'aug3'     # Noise variant: no brightness/contrast, noise σ=0.025
+
+# ----------------------------------------------------------------------------
+# File Paths
+# ----------------------------------------------------------------------------
+paths:
+  input_sites: 'inputs/known_sites.csv'  # Path to CSV with known site locations
+                                         # Required columns: site_id, latitude, longitude
+  output_dir: 'outputs/dataset'          # Directory for generated dataset
+
+# ----------------------------------------------------------------------------
+# Metadata Configuration
+# ----------------------------------------------------------------------------
+metadata:
+  label: 1                    # Label for positive samples (archaeological sites)
+  label_source: 'literature'  # Source of positive labels (e.g., literature, field survey)
+
+# ----------------------------------------------------------------------------
+# Dataset Composition Ratios
+# ----------------------------------------------------------------------------
+# These ratios are calculated based on FINAL augmented positive count
+# Final positives = N_sites × num_rotations × (1 + num_variants)
+# Example: 100 sites × 3 rotations × 4 (1 original + 3 augmented) = 1,200 final positives
+dataset_ratios:
+  integrated_to_positive_ratio: 1.0   # Integrated negatives = 100% of final positives (1:1 ratio)
+                                      # These are surrounding landscape samples
+  
+  landcover_to_positive_ratio: 0.25   # Landcover negatives = 25% of final positives
+                                      # These are urban/water/cropland samples
+  
+  unlabeled_to_positive_ratio: 0.13   # Unlabeled samples = 13% of final positives
+                                      # These are random background samples (label=-1)
+
+# ----------------------------------------------------------------------------
+# Negative Sample Composition (Label = 0)
+# ----------------------------------------------------------------------------
+label_0_composition:
+  landcover:  # Breakdown of landcover negative types (must sum to 1.0)
+    urban_ratio: 0.40     # 40% urban areas (cities, towns)
+    water_ratio: 0.30     # 30% water bodies (lakes, rivers, coastal)
+    cropland_ratio: 0.30  # 30% agricultural areas (fields, valleys)
+
+# ----------------------------------------------------------------------------
+# Study Region Definition (for all sampling)
+# ----------------------------------------------------------------------------
+site_region:
+  type: 'bbox'      # Bounding box type
+  min_lat: -17.0    # Southern boundary (degrees)
+  max_lat: -7.0     # Northern boundary (degrees)
+  min_lon: -70.0    # Western boundary (degrees)
+  max_lon: -60.0    # Eastern boundary (degrees)
+  # Note: Adjust to your study area (example covers Peru/Bolivia region)
+
+# ----------------------------------------------------------------------------
+# Integrated Negatives Configuration
+# ----------------------------------------------------------------------------
+# Integrated negatives sample the surrounding landscape of each site
+integrated_negatives:
+  enabled: true           # Enable/disable integrated negative generation
+  required_directions: 4  # Number of corner samples (4 = NW, NE, SW, SE)
+  buffer_margin: 10       # Buffer distance in meters from site edge to sample center
+                          # Helps ensure samples don't overlap with site
+  blend_width: 0          # Blending width at boundaries (0 = sharp boundaries)
+                          # Keep at 0 for distinct corner samples
+
+# ----------------------------------------------------------------------------
+# Landcover Negative Sampling Configuration
+# ----------------------------------------------------------------------------
+landcover_sampling:
+  enabled: true         # Enable/disable landcover negative generation
+  max_radius_km: 6.0    # Maximum radius for random variations around base locations
+  min_spacing_km: 1.5   # Minimum spacing between sampled locations
+                        # Prevents spatial autocorrelation
+
+# ----------------------------------------------------------------------------
+# Unlabeled Data Sampling Configuration
+# ----------------------------------------------------------------------------
+unlabeled_sampling:
+  enabled: true                 # Enable/disable unlabeled data generation
+  exclusion_buffer_km: 2.0      # Exclusion buffer around known sites (km)
+                                # Samples outside this buffer may still contain sites!
+  
+  # Study region for unlabeled sampling (typically same as site_region)
+  study_region:
+    type: 'bbox'
+    min_lat: -17.0
+    max_lat: -7.0
+    min_lon: -70.0
+    max_lon: -60.0
+  
+  default_difficulty: 'neutral'        # Default difficulty label (not used in current version)
+  default_landscape_type: 'background' # Default landscape type for unlabeled samples
+  max_attempts: 10000                  # Maximum sampling attempts before giving up
+                                       # Increase if sampling fails due to exclusions
+
+# ============================================================================
+# Dataset Size Calculation Summary
+# ============================================================================
+# Given N sites and rotation_step R:
+#   num_rotations = 360 / rotation_step
+#   num_variants = len(radiometric.variants) if enabled else 0
+#
+# Final counts:
+#   Positives (rotated):      N × num_rotations
+#   Positives (augmented):    N × num_rotations × num_variants
+#   Total positives:          N × num_rotations × (1 + num_variants)
+#
+#   Integrated negatives:     Total positives × 1.0 (same count)
+#   Landcover negatives:      Total positives × 0.25
+#   Unlabeled:                Total positives × 0.13
+#
+# Example with N=100, rotation_step=120, 3 variants:
+#   Total positives:          100 × 3 × 4 = 1,200
+#   Integrated negatives:     1,200
+#   Landcover negatives:      300
+#   Unlabeled:                156
+#   TOTAL DATASET:            2,856 grid cells
+# ============================================================================

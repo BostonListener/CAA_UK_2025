@@ -1,0 +1,249 @@
+# Archaeological Site Detection: From Papers to Datasets
+
+A complete pipeline for extracting archaeological site information from academic papers and generating multi-channel remote sensing datasets for machine learning-based site detection.
+
+---
+
+## Overview
+
+This repository combines two complementary workflows designed to support reinforcement learning and deep learning approaches to archaeological site discovery:
+
+1. **Site Extraction Pipeline** - Extract archaeological site coordinates from academic PDFs using LLMs
+2. **Dataset Generation Pipeline** - Generate multi-channel satellite imagery datasets from known site locations
+
+```
+Academic Papers (PDFs)
+         ↓
+    [Step 1: LLM Extraction]
+         ↓
+    Site Coordinates (JSON/CSV)
+         ↓
+    [Step 2: Dataset Generation]
+         ↓
+    Multi-Channel Remote Sensing Dataset
+         ↓
+    [Your RL/ML Model]
+```
+
+---
+
+## Pipeline Independence
+
+**Important:** Each step works as a standalone tool - you can use either one independently or combine them for the full workflow.
+
+### Use Step 1 Alone
+- Digitize archaeological site data from legacy publications
+- Extract coordinates and metadata from PDFs
+- Download satellite imagery for specific sites
+- Export site databases for GIS or other applications
+- **No need to install Step 2 dependencies**
+
+### Use Step 2 Alone
+- Generate training datasets from your own fieldwork coordinates
+- Process site data from existing databases or catalogs
+- Create balanced ML datasets from any site coordinate source
+- **No need to install Step 1 dependencies or OpenAI API**
+
+### Use Both Together
+- Complete end-to-end pipeline from literature to ML-ready datasets
+- Seamless data handoff between extraction and generation
+- Ideal for comprehensive archaeological ML projects
+
+---
+
+## Project Structure
+
+```
+archaeological-site-detection/
+│
+├── 1_site_extraction/              # Step 1: Extract sites from academic papers
+│   ├── app.py                      # Flask web server with LLM + GEE integration
+│   ├── templates/
+│   ├── static/
+│   ├── .gitignore                  # Step 1 specific ignores
+│   ├── requirements.txt            # Step 1 dependencies
+│   └── README.md                   # Detailed documentation for Step 1
+│
+├── 2_dataset_generation/           # Step 2: Generate training datasets
+│   ├── config/
+│   ├── scripts/
+│   ├── src/
+│   ├── .gitignore                  # Step 2 specific ignores
+│   ├── requirements.txt            # Step 2 dependencies
+│   ├── README.md                   # Detailed documentation for Step 2
+│   └── run_pipeline.py
+│
+├── README.md                       # This file
+└── LICENSE                         # MIT License
+```
+
+**Note:** Each step maintains its own `.gitignore` and `requirements.txt` for independence and modularity.
+
+---
+
+## Key Features
+
+### Step 1: Site Extraction
+- 📄 **PDF text extraction** from archaeological publications
+- 🤖 **LLM-powered analysis** (GPT-4o) to identify sites and coordinates
+- 🗺️ **Multiple coordinate format support** (DMS, decimal degrees, etc.)
+- 🛰️ **Satellite data download** for extracted sites (Sentinel-2 + terrain)
+- 🌐 **Web interface** for easy interaction
+
+### Step 2: Dataset Generation
+- 🎯 **Balanced dataset creation** with positives, negatives, and unlabeled samples
+- 🔄 **Geometric augmentation** via rotation (configurable: 3x, 4x, 6x, 12x)
+- 🌈 **Radiometric augmentation** for lighting/contrast variation
+- 📊 **11-channel data** (6 spectral bands + 3 indices + elevation + slope)
+- 📦 **Production-ready format** with metadata and validation tools
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+**For Step 1 Only:**
+- Python 3.7+
+- OpenAI API key ([get one here](https://platform.openai.com/api-keys))
+- Google Earth Engine account ([sign up here](https://earthengine.google.com/signup/))
+- Modern web browser
+
+**For Step 2 Only:**
+- Python 3.7+
+- Google Earth Engine account ([sign up here](https://earthengine.google.com/signup/))
+
+**For Both Steps:**
+- All of the above
+
+**Python Dependencies:**
+```bash
+# Install for Step 1 only
+cd 1_site_extraction
+pip install -r requirements.txt
+
+# Install for Step 2 only
+cd 2_dataset_generation
+pip install -r requirements.txt
+
+# Or install for both if using full pipeline
+```
+
+### End-to-End Workflow
+
+#### Step 1: Extract Sites from Papers
+
+```bash
+cd 1_site_extraction
+
+# Set up environment
+cp .env.example .env
+# Edit .env with your OpenAI API key and GEE project ID
+
+# Place GEE service account JSON
+cp ~/Downloads/your-gee-key.json ./gee_service_account.json
+
+# Start web interface
+python app.py
+# Open http://localhost:5000
+```
+
+**What you'll do:**
+1. Upload archaeological paper PDFs
+2. Let GPT-4o extract site information
+3. Review extracted sites with coordinates
+4. Download satellite data for each site (optional)
+5. Export site list as JSON
+
+**See detailed instructions:** [1_site_extraction/README.md](1_site_extraction/README.md)
+
+---
+
+#### Transition: Convert JSON to CSV
+
+Step 1 outputs JSON format, but Step 2 requires CSV input. Create `known_sites.csv`:
+
+```csv
+site_id,latitude,longitude,site_type
+site_001,-9.8765,-67.5346,geoglyph
+site_002,-10.1234,-68.4567,mound
+site_003,-11.2345,-69.5678,settlement
+```
+
+Extract from your Step 1 JSON output:
+- `site_id`: Unique identifier
+- `latitude`: Decimal degrees (negative for S)
+- `longitude`: Decimal degrees (negative for W)
+- `site_type`: Optional classification
+
+---
+
+#### Step 2: Generate Training Dataset
+
+```bash
+cd 2_dataset_generation
+
+# Prepare input
+mkdir -p inputs
+cp /path/to/known_sites.csv inputs/
+
+# Configure pipeline
+cp config/settings.yaml.example config/settings.yaml
+# Edit settings.yaml with your GEE project ID and parameters
+
+# Authenticate GEE
+earthengine authenticate
+
+# Run full pipeline
+python run_pipeline.py
+```
+
+**What this generates:**
+- Multi-angle views of each site (rotation augmentation)
+- Integrated negatives from surrounding landscape
+- Diverse landcover negatives (urban, water, cropland)
+- Unlabeled background samples
+- Radiometric augmentations (brightness/contrast/noise)
+
+**Output:** `outputs/dataset/` with:
+- `grid_metadata.parquet` - Master metadata table
+- `grid_images/` - Individual 100×100×11 samples as NumPy arrays
+- Ready for PyTorch/TensorFlow training
+
+**See detailed instructions:** [2_dataset_generation/README.md](2_dataset_generation/README.md)
+
+---
+
+## Citation
+
+If you use this pipeline in your research, please cite:
+
+```bibtex
+@software{archaeological_site_detection,
+  title={Archaeological Site Detection: From Papers to Datasets},
+  author={Li, Linduo and Wu, Yifan and Wang, Zifeng},
+  year={2025},
+  url={https://github.com/BostonListener/CAA_UK_2025}
+}
+```
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+- **Google Earth Engine**: Platform for planetary-scale geospatial analysis
+- **OpenAI GPT-4**: LLM-powered text extraction and analysis
+
+---
+
+## Contact & Support
+
+- **Documentation**: See README files in each subfolder for detailed guides
+- **Issues**: Report bugs or request features via GitHub Issues
+- **Discussions**: Share your results and ask questions in GitHub Discussions

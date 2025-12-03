@@ -1,0 +1,651 @@
+/* ============================================================================
+   ARCHAEOLOGICAL SITE EXTRACTION TOOL
+   ============================================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============================================================================
+   BASE & TYPOGRAPHY
+   ============================================================================ */
+
+body {
+    font-family: 'Crimson Text', 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, #E8DCC4 0%, #D7CCC8 100%);
+    background-attachment: fixed;
+    padding: 20px;
+    line-height: 1.7;
+    color: #3E2723;
+    position: relative;
+}
+
+/* Subtle paper texture overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(139, 119, 101, 0.03) 2px,
+            rgba(139, 119, 101, 0.03) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(139, 119, 101, 0.03) 2px,
+            rgba(139, 119, 101, 0.03) 4px
+        );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #FFF8E7;
+    background-image: 
+        linear-gradient(to bottom, rgba(236, 229, 206, 0.3) 0%, transparent 100%),
+        radial-gradient(circle at 10% 20%, rgba(205, 180, 140, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(205, 180, 140, 0.1) 0%, transparent 50%);
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 
+        0 10px 40px rgba(62, 39, 35, 0.3),
+        inset 0 0 100px rgba(205, 133, 63, 0.05);
+    border: 3px solid #8B7765;
+    border-left: 8px solid #A0826D;
+    position: relative;
+    z-index: 2;
+}
+
+/* Decorative corner elements */
+.container::before,
+.container::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #A0826D;
+}
+
+.container::before {
+    top: 15px;
+    left: 15px;
+    border-right: none;
+    border-bottom: none;
+    background: linear-gradient(135deg, rgba(205, 133, 63, 0.1) 0%, transparent 100%);
+}
+
+.container::after {
+    bottom: 15px;
+    right: 15px;
+    border-left: none;
+    border-top: none;
+    background: linear-gradient(-45deg, rgba(205, 133, 63, 0.1) 0%, transparent 100%);
+}
+
+h1 {
+    font-family: 'Cinzel', 'Trajan Pro', 'Georgia', serif;
+    color: #5D4037;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(93, 64, 55, 0.1);
+    border-bottom: 3px double #A0826D;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #6D4C41;
+    margin-bottom: 35px;
+    font-style: italic;
+    font-size: 1.1em;
+    letter-spacing: 0.5px;
+}
+
+h2 {
+    font-family: 'Cinzel', 'Georgia', serif;
+    color: #5D4037;
+    font-size: 1.8em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-family: 'Cinzel', 'Georgia', serif;
+    color: #6D4C41;
+    font-size: 1.3em;
+    letter-spacing: 0.5px;
+}
+
+h4 {
+    font-family: 'Georgia', serif;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+/* ============================================================================
+   UPLOAD SECTION
+   ============================================================================ */
+
+.upload-section {
+    margin-bottom: 35px;
+    background: rgba(255, 248, 220, 0.5);
+    padding: 30px;
+    border: 2px solid #D2B48C;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 10px rgba(139, 119, 101, 0.1);
+    position: relative;
+}
+
+.upload-section::before {
+    content: '⛏';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2em;
+    background: #FFF8E7;
+    padding: 5px 15px;
+    border: 2px solid #D2B48C;
+    border-radius: 8px;
+}
+
+.file-input-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#pdfFile {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+#fileLabel {
+    display: block;
+    padding: 25px;
+    background: #F5F5DC;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(205, 133, 63, 0.03) 10px,
+            rgba(205, 133, 63, 0.03) 20px
+        );
+    border: 3px dashed #A0826D;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    color: #5D4037;
+    font-weight: 500;
+    position: relative;
+}
+
+#fileLabel::before {
+    content: '📜';
+    display: block;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+#fileLabel:hover {
+    border-color: #8B4513;
+    background: #FFFACD;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.2);
+}
+
+#submitBtn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #CD853F 0%, #A0826D 100%);
+    color: #FFF8E7;
+    border: 2px solid #8B7355;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-family: 'Cinzel', 'Georgia', serif;
+    box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+#submitBtn::before {
+    content: '🗺️';
+    margin-right: 8px;
+}
+
+#submitBtn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+#submitBtn:hover:not(:disabled)::after {
+    width: 300px;
+    height: 300px;
+}
+
+#submitBtn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #B8860B 0%, #8B7355 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+#submitBtn:disabled {
+    background: #A9A9A9;
+    cursor: not-allowed;
+    border-color: #808080;
+    opacity: 0.6;
+}
+
+/* ============================================================================
+   STATUS SECTION
+   ============================================================================ */
+
+.status-section {
+    text-align: center;
+    padding: 50px;
+    background: rgba(245, 245, 220, 0.8);
+    border: 2px solid #D2B48C;
+    border-radius: 10px;
+    margin: 25px 0;
+    box-shadow: inset 0 2px 15px rgba(139, 119, 101, 0.1);
+}
+
+.loader {
+    border: 5px solid #F5DEB3;
+    border-top: 5px solid #CD853F;
+    border-right: 5px solid #A0826D;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1.5s linear infinite;
+    margin: 0 auto 25px;
+    box-shadow: 0 4px 15px rgba(205, 133, 63, 0.3);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#statusText {
+    font-size: 1.2em;
+    color: #5D4037;
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* ============================================================================
+   ERROR SECTION
+   ============================================================================ */
+
+.error-section {
+    background: #F4E4D7;
+    border: 3px solid #CD853F;
+    border-left: 8px solid #A0522D;
+    color: #5D4037;
+    padding: 25px;
+    border-radius: 10px;
+    margin: 25px 0;
+    box-shadow: 0 4px 15px rgba(160, 82, 45, 0.2);
+}
+
+.error-section h3 {
+    margin-bottom: 12px;
+    color: #8B4513;
+    font-size: 1.3em;
+}
+
+.error-section h3::before {
+    content: '⚠️ ';
+    margin-right: 8px;
+}
+
+/* ============================================================================
+   RESULTS SECTION
+   ============================================================================ */
+
+.results-section {
+    margin-top: 35px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px double #A0826D;
+    position: relative;
+}
+
+.results-header::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #D2B48C 50%, transparent);
+}
+
+.results-header h2 {
+    color: #5D4037;
+}
+
+.download-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #8FBC8F 0%, #6B8E23 100%);
+    color: #FFF8E7;
+    border: 2px solid #556B2F;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 3px 10px rgba(107, 142, 35, 0.3);
+}
+
+.download-btn::before {
+    content: '📥 ';
+    margin-right: 6px;
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, #7BA77B 0%, #556B2F 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(107, 142, 35, 0.4);
+}
+
+/* ============================================================================
+   SUMMARY
+   ============================================================================ */
+
+.summary {
+    background: rgba(230, 230, 250, 0.3);
+    background-image: 
+        linear-gradient(135deg, rgba(205, 180, 140, 0.1) 0%, transparent 100%);
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    border: 2px solid #B8A88F;
+    border-left: 6px solid #8B7765;
+    box-shadow: 
+        0 4px 15px rgba(139, 119, 101, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+}
+
+.summary h3 {
+    color: #5D4037;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+}
+
+.summary p {
+    margin: 12px 0;
+    font-size: 1.05em;
+    color: #4A3728;
+    padding-left: 20px;
+    position: relative;
+}
+
+.summary p::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: #A0826D;
+    font-size: 0.8em;
+}
+
+.summary p strong {
+    color: #5D4037;
+    font-weight: 700;
+}
+
+/* ============================================================================
+   SITES LIST
+   ============================================================================ */
+
+.sites-list h3 {
+    color: #5D4037;
+    margin-bottom: 25px;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #D2B48C;
+}
+
+.sites-list h3::before {
+    content: '🏛️ ';
+    margin-right: 10px;
+}
+
+.site-card {
+    background: #FFFEF0;
+    background-image: 
+        linear-gradient(to bottom right, rgba(245, 245, 220, 0.5) 0%, transparent 100%);
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    border: 2px solid #D2B48C;
+    border-left: 6px solid #CD853F;
+    box-shadow: 
+        0 4px 15px rgba(139, 119, 101, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.site-card:hover {
+    transform: translateX(5px);
+    box-shadow: 
+        0 6px 25px rgba(139, 119, 101, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-left-color: #A0522D;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #E8DCC4;
+}
+
+.site-card h4 {
+    color: #8B4513;
+    margin: 0;
+    flex: 1;
+    font-size: 1.3em;
+    font-weight: 700;
+}
+
+.site-card p {
+    margin: 10px 0;
+    color: #4A3728;
+    line-height: 1.8;
+    padding-left: 15px;
+    border-left: 2px solid #E8DCC4;
+}
+
+.site-card p strong {
+    color: #5D4037;
+    font-weight: 700;
+    display: inline-block;
+    min-width: 120px;
+}
+
+.coordinates {
+    background: rgba(255, 243, 205, 0.6);
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 8px,
+            rgba(205, 133, 63, 0.05) 8px,
+            rgba(205, 133, 63, 0.05) 16px
+        );
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 2px solid #DEB887;
+    border-left: 4px solid #CD853F;
+    font-family: 'Courier New', monospace;
+    box-shadow: inset 0 2px 8px rgba(205, 133, 63, 0.1);
+}
+
+.coordinates::before {
+    content: '🧭 ';
+    margin-right: 8px;
+}
+
+.coordinates strong {
+    color: #8B4513;
+}
+
+.confidence {
+    font-style: italic;
+    color: #6D5C4A;
+    background: rgba(222, 184, 135, 0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 10px;
+    border-left: 3px solid #DEB887;
+}
+
+/* ============================================================================
+   GEE DOWNLOAD BUTTON
+   ============================================================================ */
+
+.gee-download-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%);
+    color: #FFF8E7;
+    border: 2px solid #4169E1;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 3px 10px rgba(70, 130, 180, 0.3);
+}
+
+.gee-download-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #36648B 0%, #4682B4 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(70, 130, 180, 0.4);
+}
+
+.gee-download-btn:disabled {
+    background: #A9A9A9;
+    cursor: wait;
+    border-color: #808080;
+    opacity: 0.7;
+}
+
+.gee-download-btn:active:not(:disabled) {
+    transform: translateY(0px);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 25px;
+        border-left-width: 4px;
+    }
+    
+    .container::before,
+    .container::after {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .container::before {
+        top: 10px;
+        left: 10px;
+    }
+    
+    .container::after {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+        letter-spacing: 1px;
+    }
+    
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .gee-download-btn {
+        width: 100%;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .download-btn {
+        width: 100%;
+    }
+}
+
+/* ============================================================================
+   GOOGLE FONTS IMPORT
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
