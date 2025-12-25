@@ -294,6 +294,7 @@ This work builds upon data and resources from multiple sources:
 - **Google Earth Engine** served as the primary platform for geospatial data processing and analysis
 
 **Archaeological Data Sources:**
+
 We are deeply grateful to **James Q. Jacobs** for his invaluable contribution to archaeological research through his publicly accessible compilation of geoglyph locations. His meticulous curation of archaeological data has been instrumental in enabling this work. The archaeological site locations were sourced from his compilation, which synthesizes data from:
 
 - Jacobs, J.Q. (2025). *JQ Jacobs Archaeology*. Last modified July 31, 2025. https://jqjacobs.net/archaeology/geoglyph.html
