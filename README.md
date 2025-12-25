@@ -25,6 +25,22 @@ Academic Papers (PDFs)
     [Your RL/ML Model]
 ```
 
+**Project Origins:** This work was developed as part of our participation in the [OpenAI to Z Challenge on Kaggle](https://www.kaggle.com/competitions/openai-to-z-challenge/overview), where we explored AI-powered archaeological discovery in the Amazon. Our competition writeup detailing the approach is available [here](https://www.kaggle.com/competitions/openai-to-z-challenge/writeups/bostonlistener_digitalarchaeology). The pipeline has since evolved into a comprehensive framework for digitizing archaeological knowledge and preparing it for machine learning applications. Our approach was presented at [CAA UK 2025](https://uk.caa-international.org/caa-uk-2025/) (Computer Applications and Quantitative Methods in Archaeology) held at the University of Cambridge, December 9-10, 2025.
+
+**Conference Materials:**
+- [Abstract](https://drive.google.com/file/d/1zQ3-LrlsDmZiI1D3QkJo1lQ43e6MwYq1/view?usp=sharing)
+- [Presentation Slides](https://drive.google.com/file/d/1n79eqJ7XM3h3ftmJakhP5JOrqjONAnRE/view?usp=sharing)
+
+---
+
+## Dataset
+
+A pre-generated dataset created using this pipeline is available on Hugging Face:
+
+**🤗 [Archaeological Sites Dataset (CAA UK 2025)](https://huggingface.co/datasets/lldbrett/archaeological-sites-caa2025)**
+
+The dataset provides multi-channel remote sensing data (Sentinel-2 + FABDEM + spectral indices) with balanced positive/negative samples and augmentations for training archaeological site detection models.
+
 ---
 
 ## Pipeline Independence
@@ -216,7 +232,24 @@ python run_pipeline.py
 
 ## Citation
 
-If you use this pipeline in your research, please cite:
+If you use this pipeline or dataset in your research, please cite both the paper and software:
+
+### Paper Citation
+
+```bibtex
+@inproceedings{li2025fusing,
+  title={{Fusing Text and Terrain}: {An LLM}-Powered Pipeline for Preparing Archaeological Datasets from Literature and Remote Sensing Imagery},
+  author={Li, Linduo and Wu, Yifan and Wang, Zifeng},
+  booktitle={{CAA UK 2025}: Computer Applications and Quantitative Methods in Archaeology},
+  year={2025},
+  month={December},
+  address={University of Cambridge, UK},
+  organization={CAA UK},
+  note={Conference held 9--10 December 2025}
+}
+```
+
+### Software Citation
 
 ```bibtex
 @software{archaeological_site_detection,
@@ -229,16 +262,30 @@ If you use this pipeline in your research, please cite:
 
 ---
 
-## License
+## Acknowledgments
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This work builds upon data and resources from multiple sources:
+
+**Satellite and Terrain Data:**
+- **Sentinel-2 satellite imagery** provided by the European Space Agency (ESA) through the Copernicus Programme
+- **FABDEM elevation data** provided by the University of Bristol
+- **Google Earth Engine** served as the primary platform for geospatial data processing and analysis
+
+**Archaeological Data Sources:**
+We are deeply grateful to **James Q. Jacobs** for his invaluable contribution to archaeological research through his publicly accessible compilation of geoglyph locations. His meticulous curation of archaeological data has been instrumental in enabling this work:
+- Jacobs, J.Q. (2025). *JQ Jacobs Archaeology*. Last modified July 31, 2025. https://jqjacobs.net/archaeology/geoglyph.html
+
+**Technical Infrastructure:**
+- **OpenAI GPT-4o** for LLM-powered text extraction and analysis
+- The **Kaggle OpenAI to Z Challenge** for providing the initial impetus and platform for this research
+
+We acknowledge that this pipeline stands on the shoulders of both cutting-edge technology and dedicated scholarly work in the archaeological community.
 
 ---
 
-## Acknowledgments
+## License
 
-- **Google Earth Engine**: Platform for planetary-scale geospatial analysis
-- **OpenAI GPT-4**: LLM-powered text extraction and analysis
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -247,3 +294,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Documentation**: See README files in each subfolder for detailed guides
 - **Issues**: Report bugs or request features via GitHub Issues
 - **Discussions**: Share your results and ask questions in GitHub Discussions
+- **Email**: linduo.li@ip-paris.fr
