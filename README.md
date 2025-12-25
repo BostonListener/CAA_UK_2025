@@ -295,22 +295,13 @@ This work builds upon data and resources from multiple sources:
 
 **Archaeological Data Sources:**
 We are deeply grateful to **James Q. Jacobs** for his invaluable contribution to archaeological research through his publicly accessible compilation of geoglyph locations. His meticulous curation of archaeological data has been instrumental in enabling this work:
+
 - Jacobs, J.Q. (2025). *JQ Jacobs Archaeology*. Last modified July 31, 2025. https://jqjacobs.net/archaeology/geoglyph.html
-
-*Published Research and Field Data:*
-This work incorporates archaeological site locations from peer-reviewed publications and field surveys, including contributions from Kalliola, Tokarský, Peripato et al., and Erickson et al. Their published datasets and field observations have been essential for establishing ground truth locations.
-
-*Remote Sensing Observations:*
-We acknowledge community-contributed observations via Google Earth from A. Olmeda and R. Walker, whose careful identification of archaeological features has enriched our dataset with additional site locations.
-
-*LiDAR-Derived Site Data:*
-We are grateful for LiDAR survey data made available through the work of Pärssinen et al., Neves, and Prümers, which provided high-precision archaeological site locations in heavily forested regions.
-
-*Institutional Data:*
-We acknowledge **IPHAN** (Instituto do Patrimônio Histórico e Artístico Nacional, Brazil) for providing access to heritage site records that contributed to our archaeological site database.
-
-*Landscape Monitoring:*
-Landcover and environmental context data were derived from **Global Forest Watch** (globalforestwatch.org), which provided essential landscape classification information for negative sample generation.
+- Kalliola, Tokarský, Peripato et al., and Erickson et al. for peer-reviewed publications and field survey data that established ground truth locations
+- A. Olmeda and R. Walker for community-contributed archaeological observations via Google Earth
+- Pärssinen et al., Neves, and Prümers for LiDAR survey data providing high-precision site locations in forested regions
+- **IPHAN** (Instituto do Patrimônio Histórico e Artístico Nacional, Brazil) for heritage site records
+- **Global Forest Watch** (globalforestwatch.org) for landcover and landscape classification data used in negative sample generation
 
 **Technical Infrastructure:**
 - **OpenAI GPT-4o** for LLM-powered text extraction and analysis
