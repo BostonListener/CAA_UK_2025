@@ -76,8 +76,8 @@ pip install -r requirements.txt
 
 ```bash
 # Clone or download this repository
-git clone <repository-url>
-cd archaeological-site-extractor
+git clone https://github.com/BostonListener/CAA_UK_2025
+cd CAA_UK_2025/1_site_extraction
 
 # Install Python packages
 pip install -r requirements.txt
@@ -141,7 +141,7 @@ cp .env.example .env
 ## File Structure
 
 ```
-archaeological-site-extractor/
+1_site_extraction/
 │
 ├── app.py                      # Flask web server with GEE integration
 │
@@ -191,8 +191,8 @@ Default settings in `app.py` (modify if needed):
 ```python
 GEE_CONFIG = {
     'project': os.getenv('GEE_PROJECT_ID'),
-    'cell_size_km': 1.0,              # 1km × 1km grid cells
-    'pixels_per_km': 100,              # 100 × 100 pixel output (10m resolution)
+    'cell_size_km': 1.0,                # 1km × 1km grid cells
+    'pixels_per_km': 100,               # 100 × 100 pixel output (10m resolution)
     'sentinel2': {
         'date_start': '2020-01-01',
         'date_end': '2024-12-31',
@@ -230,7 +230,7 @@ Open http://localhost:5000 in your browser
    - Select archaeological paper
    - Click "Extract Sites"
 
-3. **Wait for extraction** (20-40 seconds)
+3. **Wait for extraction** (30 seconds)
    - LLM analyzes paper
    - Identifies sites and coordinates
 
