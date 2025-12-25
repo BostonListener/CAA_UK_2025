@@ -70,7 +70,7 @@ The dataset provides multi-channel remote sensing data (Sentinel-2 + FABDEM + sp
 ## Project Structure
 
 ```
-archaeological-site-detection/
+CAA_UK_2025/
 │
 ├── 1_site_extraction/              # Step 1: Extract sites from academic papers
 │   ├── app.py                      # Flask web server with LLM + GEE integration
@@ -232,9 +232,9 @@ python run_pipeline.py
 
 ## Citation
 
-If you use this pipeline or dataset in your research, please cite both the paper and software:
+If you use this dataset or pipeline in your research, please cite either conference or software:
 
-### Paper Citation
+### Conference Citation
 
 ```bibtex
 @inproceedings{li2025fusing,
