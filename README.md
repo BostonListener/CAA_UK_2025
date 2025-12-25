@@ -294,14 +294,20 @@ This work builds upon data and resources from multiple sources:
 - **Google Earth Engine** served as the primary platform for geospatial data processing and analysis
 
 **Archaeological Data Sources:**
-We are deeply grateful to **James Q. Jacobs** for his invaluable contribution to archaeological research through his publicly accessible compilation of geoglyph locations. His meticulous curation of archaeological data has been instrumental in enabling this work:
+We are deeply grateful to **James Q. Jacobs** for his invaluable contribution to archaeological research through his publicly accessible compilation of geoglyph locations. His meticulous curation of archaeological data has been instrumental in enabling this work. The archaeological site locations were sourced from his compilation, which synthesizes data from:
 
 - Jacobs, J.Q. (2025). *JQ Jacobs Archaeology*. Last modified July 31, 2025. https://jqjacobs.net/archaeology/geoglyph.html
-- Kalliola, Tokarský, Peripato et al., and Erickson et al. for peer-reviewed publications and field survey data that established ground truth locations
-- A. Olmeda and R. Walker for community-contributed archaeological observations via Google Earth
-- Pärssinen et al., Neves, and Prümers for LiDAR survey data providing high-precision site locations in forested regions
-- **IPHAN** (Instituto do Patrimônio Histórico e Artístico Nacional, Brazil) for heritage site records
-- **Global Forest Watch** (globalforestwatch.org) for landcover and landscape classification data used in negative sample generation
+- Kalliola (2024)
+- Tokarský (2025)
+- Peripato et al.
+- Erickson et al. (2008)
+- A. Olmeda (Google Earth observations, 2022)
+- R. Walker (Google Earth observations, 2022)
+- Pärssinen et al. (LiDAR data)
+- Neves (LiDAR data)
+- Prümers (LiDAR data)
+- IPHAN (Instituto do Patrimônio Histórico e Artístico Nacional, Brazil)
+- Global Forest Watch (globalforestwatch.org)
 
 **Technical Infrastructure:**
 - **OpenAI GPT-4o** for LLM-powered text extraction and analysis
