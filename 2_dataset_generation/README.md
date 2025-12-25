@@ -1,4 +1,4 @@
-# Archaeological Site Detection Dataset Pipeline
+# Archaeological Site Dataset Pipeline
 
 A complete pipeline for generating multi-channel remote sensing datasets for archaeological site detection using Sentinel-2 imagery, FABDEM elevation data, and spectral indices.
 
@@ -32,7 +32,7 @@ Each sample is a 1×1 km grid cell at 10m resolution (100×100 pixels) with 11 c
 
 ## File Structure
 ```
-project_root/
+2_dataset_generation/
 ├── config/
 │   └── settings.yaml                       # Configuration parameters
 │
@@ -288,7 +288,7 @@ Given **N** known sites and **R** rotations (where **R = 360 / rotation_step**):
 
 ## Train/Val/Test Split Guidelines
 
-### ⚠️ CRITICAL: Group by Site to Prevent Data Leakage
+### CRITICAL: Group by Site to Prevent Data Leakage
 
 **NEVER split randomly** - this causes data leakage because rotations/augmentations of the same site would appear in multiple splits.
 
