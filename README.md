@@ -41,6 +41,28 @@ A pre-generated dataset created using this pipeline is available on Hugging Face
 
 The dataset provides multi-channel remote sensing data (Sentinel-2 + FABDEM + spectral indices) with balanced positive/negative samples and augmentations for training archaeological site detection models.
 
+### Dataset Samples
+
+Below are example visualizations from each category in the dataset. Each sample is a 100×100 pixel multi-channel image with 11 bands (RGB composite shown for visualization).
+
+| Positives | Integrated Negatives | Landcover Negatives | Unlabeled |
+|:---------:|:--------------------:|:-------------------:|:---------:|
+| ![](grid_samples/positives/grid_000018_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000018_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_000221_visualization.png) | ![](grid_samples/unlabeled/unla_000871_visualization.png) |
+| ![](grid_samples/positives/grid_000145_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000145_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_000729_visualization.png) | ![](grid_samples/unlabeled/unla_001089_visualization.png) |
+| ![](grid_samples/positives/grid_000206_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000206_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_000812_visualization.png) | ![](grid_samples/unlabeled/unla_001424_visualization.png) |
+| ![](grid_samples/positives/grid_000317_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000317_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_000985_visualization.png) | ![](grid_samples/unlabeled/unla_001483_visualization.png) |
+| ![](grid_samples/positives/grid_000601_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000601_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_001354_visualization.png) | ![](grid_samples/unlabeled/unla_001624_visualization.png) |
+| ![](grid_samples/positives/grid_000685_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000685_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_001507_visualization.png) | ![](grid_samples/unlabeled/unla_001653_visualization.png) |
+| ![](grid_samples/positives/grid_000832_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_000832_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_001750_visualization.png) | ![](grid_samples/unlabeled/unla_001682_visualization.png) |
+| ![](grid_samples/positives/grid_001287_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_001287_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_002172_visualization.png) | ![](grid_samples/unlabeled/unla_002019_visualization.png) |
+| ![](grid_samples/positives/grid_001375_rot000_visualization.png) | ![](grid_samples/integrated_negatives/ineg_001375_rot000_visualization.png) | ![](grid_samples/landcover_negatives/lneg_002241_visualization.png) | ![](grid_samples/unlabeled/unla_002099_visualization.png) |
+
+**Categories:**
+- **Positives**: Known archaeological sites (geoglyphs, mounds, settlements)
+- **Integrated Negatives**: Areas surrounding positive sites, spatially close but archaeologically empty
+- **Landcover Negatives**: Diverse landscapes (urban, water, cropland) to improve model robustness
+- **Unlabeled**: Background samples for semi-supervised learning approaches
+
 ---
 
 ## Pipeline Independence
