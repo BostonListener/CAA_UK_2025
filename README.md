@@ -2,13 +2,11 @@
 
 ![Python](https://img.shields.io/badge/python-3.7+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-![CAA UK 2025](https://img.shields.io/badge/CAA%20UK%202025-presented-blue.svg)
-
 ![Flask](https://img.shields.io/badge/Flask-web%20interface-black.svg?logo=flask)
-![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-integrated-4285F4.svg)
-
 ![PyTorch](https://img.shields.io/badge/PyTorch-compatible-EE4C2C.svg?logo=pytorch)
+![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-integrated-4285F4.svg)
 [![Hugging Face](https://img.shields.io/badge/🤗%20Dataset-archaeological--sites--caa2025-yellow)](https://huggingface.co/datasets/lldbrett/archaeological-sites-caa2025)
+![CAA UK 2025](https://img.shields.io/badge/CAA%20UK%202025-presented-blue.svg)
 
 A complete pipeline for extracting archaeological site information from academic papers and generating multi-channel remote sensing datasets for machine learning-based site detection.
 
