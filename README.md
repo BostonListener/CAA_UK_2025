@@ -4,6 +4,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Flask](https://img.shields.io/badge/Flask-web%20interface-black.svg?logo=flask)
 ![PyTorch](https://img.shields.io/badge/PyTorch-compatible-EE4C2C.svg?logo=pytorch)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-compatible-FF6F00.svg?logo=tensorflow)
 
 ![CAA UK 2025](https://img.shields.io/badge/CAA%20UK%202025-presented-blue.svg)
 ![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-integrated-4285F4.svg)
