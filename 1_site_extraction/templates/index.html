@@ -142,26 +142,38 @@
             document.getElementById('sitesContent').innerHTML = sitesHTML;
             document.getElementById('resultsSection').style.display = 'block';
 
-            // Attach event listeners to download buttons
-            attachDownloadListeners();
+            // Attach event listeners to buttons
+            attachButtonListeners();
         }
 
         function createSiteCard(site, index) {
             const hasCoordinates = site.coordinates?.has_explicit_coordinates || false;
             const coordinatesRaw = site.coordinates?.raw_text || '';
             const siteName = site.site_name || 'Unnamed Site';
+            const lat = site.coordinates?.latitude || '';
+            const lon = site.coordinates?.longitude || '';
             
             let html = `
                 <div class="site-card">
                     <div class="site-header">
                         <h4>Site ${index + 1}: ${siteName}</h4>
                         ${hasCoordinates ? `
-                            <button class="gee-download-btn" 
-                                    data-site-name="${siteName}"
-                                    data-coordinates="${coordinatesRaw}"
-                                    data-index="${index}">
-                                📥 Download GEE Data
-                            </button>
+                            <div class="button-group">
+                                <button class="maps-btn" 
+                                        data-site-name="${siteName}"
+                                        data-coordinates="${coordinatesRaw}"
+                                        data-lat="${lat}"
+                                        data-lon="${lon}"
+                                        data-index="${index}">
+                                    🗺️ View on Map
+                                </button>
+                                <button class="gee-download-btn" 
+                                        data-site-name="${siteName}"
+                                        data-coordinates="${coordinatesRaw}"
+                                        data-index="${index}">
+                                    🔥 Download GEE Data
+                                </button>
+                            </div>
                         ` : ''}
                     </div>
                     
@@ -200,9 +212,22 @@
             return html;
         }
 
-        function attachDownloadListeners() {
+        function attachButtonListeners() {
+            // Maps buttons
+            const mapsButtons = document.querySelectorAll('.maps-btn');
+            mapsButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const siteName = this.getAttribute('data-site-name');
+                    const coordinatesRaw = this.getAttribute('data-coordinates');
+                    const lat = parseFloat(this.getAttribute('data-lat'));
+                    const lon = parseFloat(this.getAttribute('data-lon'));
+                    
+                    openGoogleMaps(siteName, coordinatesRaw, lat, lon, this);
+                });
+            });
+
+            // GEE download buttons
             const downloadButtons = document.querySelectorAll('.gee-download-btn');
-            
             downloadButtons.forEach(button => {
                 button.addEventListener('click', async function() {
                     const siteName = this.getAttribute('data-site-name');
@@ -211,6 +236,43 @@
                     await downloadGEEData(siteName, coordinatesRaw, this);
                 });
             });
+        }
+
+        function openGoogleMaps(siteName, coordinatesRaw, lat, lon, buttonElement) {
+            // Store original button state
+            const originalText = buttonElement.textContent;
+            buttonElement.disabled = true;
+            buttonElement.textContent = '🗺️ Opening...';
+            
+            let mapsUrl;
+            
+            // Try to use decimal coordinates if available
+            if (!isNaN(lat) && !isNaN(lon) && lat !== 0 && lon !== 0) {
+                // Format: https://www.google.com/maps/place/lat,lon/@lat,lon,500m
+                const coordString = `${lat},${lon}`;
+                mapsUrl = `https://www.google.com/maps/place/${encodeURIComponent(coordString)}/@${coordString},500m`;
+            } else if (coordinatesRaw) {
+                // Fallback to raw coordinates string
+                mapsUrl = `https://www.google.com/maps/place/${encodeURIComponent(coordinatesRaw)}`;
+            } else {
+                // No valid coordinates
+                buttonElement.textContent = '❌ No Coordinates';
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.disabled = false;
+                }, 2000);
+                return;
+            }
+            
+            // Open in new tab
+            window.open(mapsUrl, '_blank');
+            
+            // Provide feedback
+            buttonElement.textContent = '✅ Opened!';
+            setTimeout(() => {
+                buttonElement.textContent = originalText;
+                buttonElement.disabled = false;
+            }, 2000);
         }
 
         async function downloadGEEData(siteName, coordinatesRaw, buttonElement) {

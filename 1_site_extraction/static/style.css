@@ -1,5 +1,6 @@
 /* ============================================================================
-   ARCHAEOLOGICAL SITE EXTRACTION TOOL
+   ARCHAEOLOGICAL SITE EXTRACTION TOOL - THEMED STYLES
+   Ancient map & excavation aesthetic
    ============================================================================ */
 
 * {
@@ -380,7 +381,7 @@ h4 {
 }
 
 .download-btn::before {
-    content: '📥 ';
+    content: '🔥 ';
     margin-right: 6px;
 }
 
@@ -552,6 +553,54 @@ h4 {
 }
 
 /* ============================================================================
+   BUTTON GROUP
+   ============================================================================ */
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ============================================================================
+   GOOGLE MAPS BUTTON
+   ============================================================================ */
+
+.maps-btn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #D2691E 0%, #A0522D 100%);
+    color: #FFF8E7;
+    border: 2px solid #8B4513;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 3px 10px rgba(210, 105, 30, 0.3);
+}
+
+.maps-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #B8621B 0%, #8B4513 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(210, 105, 30, 0.4);
+}
+
+.maps-btn:disabled {
+    background: #A9A9A9;
+    cursor: wait;
+    border-color: #808080;
+    opacity: 0.7;
+}
+
+.maps-btn:active:not(:disabled) {
+    transform: translateY(0px);
+}
+
+/* ============================================================================
    GEE DOWNLOAD BUTTON
    ============================================================================ */
 
@@ -629,6 +678,12 @@ h4 {
         align-items: flex-start;
     }
     
+    .button-group {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .maps-btn,
     .gee-download-btn {
         width: 100%;
     }
@@ -645,7 +700,7 @@ h4 {
 }
 
 /* ============================================================================
-   GOOGLE FONTS IMPORT
+   GOOGLE FONTS IMPORT (Add to HTML head if needed)
    ============================================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
