@@ -42,6 +42,10 @@ A web-based tool for extracting archaeological site information from academic pa
 - **Progress Tracking**: Real-time feedback during processing
 - **JSON & ZIP Export**: Download structured metadata and satellite data packages
 
+## Quick Start with Google Colab
+
+**Try without installation:** A [demo notebook](https://colab.research.google.com/drive/1pxG5RlaJukbU9nKp_13nz4OZQ0AMiYy2) is available.
+
 ---
 
 ## Requirements

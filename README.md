@@ -104,25 +104,26 @@ Below are example visualizations from each category in the dataset. Each sample 
 ```
 CAA_UK_2025/
 │
-├── 1_site_extraction/              # Step 1: Extract sites from academic papers
-│   ├── app.py                      # Flask web server with LLM + GEE integration
+├── 1_site_extraction/                                    # Step 1: Extract sites from academic papers
+│   ├── app.py                                            # Flask web server with LLM + GEE integration
 │   ├── templates/
 │   ├── static/
-│   ├── .gitignore                  # Step 1 specific ignores
-│   ├── requirements.txt            # Step 1 dependencies
-│   └── README.md                   # Detailed documentation for Step 1
+│   ├── .gitignore                                        # Step 1 specific ignores
+│   ├── requirements.txt                                  # Step 1 dependencies
+│   ├── CAA_UK_2025_Site_Extraction_Demo.ipynb            # Demo Notebook
+│   └── README.md                                         # Detailed documentation for Step 1
 │
-├── 2_dataset_generation/           # Step 2: Generate training datasets
+├── 2_dataset_generation/                                 # Step 2: Generate training datasets
 │   ├── config/
 │   ├── scripts/
 │   ├── src/
-│   ├── .gitignore                  # Step 2 specific ignores
-│   ├── requirements.txt            # Step 2 dependencies
-│   ├── README.md                   # Detailed documentation for Step 2
+│   ├── .gitignore                                        # Step 2 specific ignores
+│   ├── requirements.txt                                  # Step 2 dependencies
+│   ├── README.md                                         # Detailed documentation for Step 2
 │   └── run_pipeline.py
 │
-├── README.md                       # This file
-└── LICENSE                         # MIT License
+├── README.md                                             # This file
+└── LICENSE                                               # MIT License
 ```
 
 **Note:** Each step maintains its own `.gitignore` and `requirements.txt` for independence and modularity.
