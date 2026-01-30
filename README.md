@@ -10,6 +10,8 @@
 ![Google Earth Engine](https://img.shields.io/badge/Google%20Earth%20Engine-integrated-4285F4.svg)
 [![Hugging Face](https://img.shields.io/badge/🤗%20Dataset-archaeological--sites--caa2025-yellow)](https://huggingface.co/datasets/lldbrett/archaeological-sites-caa2025)
 
+![CAA UK 2025 Conference](CAA_UK_2025.png)
+
 A complete pipeline for extracting archaeological site information from academic papers and generating multi-channel remote sensing datasets for machine learning-based site detection.
 
 ---
@@ -34,8 +36,6 @@ Academic Papers (PDFs)
          ↓
     [Your RL/ML Model]
 ```
-
-![CAA UK 2025 Conference](CAA_UK_2025.png)
 
 **Project Origins:** This work was developed as part of our participation in the [OpenAI to Z Challenge on Kaggle](https://www.kaggle.com/competitions/openai-to-z-challenge/overview), where we explored AI-powered archaeological discovery in the Amazon. Our competition writeup detailing the approach is available [here](https://www.kaggle.com/competitions/openai-to-z-challenge/writeups/bostonlistener_digitalarchaeology). The pipeline has since evolved into a comprehensive framework for digitizing archaeological knowledge and preparing it for machine learning applications. Our approach was presented at [CAA UK 2025](https://uk.caa-international.org/caa-uk-2025/) (Computer Applications and Quantitative Methods in Archaeology) held at the University of Cambridge, December 9-10, 2025.
 
