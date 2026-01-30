@@ -12,9 +12,9 @@
 
 ![CAA UK 2025 Conference](CAA_UK_2025.png)
 
-A complete pipeline for extracting archaeological site information from academic papers and generating multi-channel remote sensing datasets for machine learning-based site detection.
+[Conference Exhibition](https://sites.google.com/cam.ac.uk/caa-uk25contact/home)
 
-- [Conference Exhibition](https://sites.google.com/cam.ac.uk/caa-uk25contact/home)
+A complete pipeline for extracting archaeological site information from academic papers and generating multi-channel remote sensing datasets for machine learning-based site detection.
 
 ---
 
