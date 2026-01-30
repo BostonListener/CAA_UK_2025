@@ -14,6 +14,8 @@
 
 A complete pipeline for extracting archaeological site information from academic papers and generating multi-channel remote sensing datasets for machine learning-based site detection.
 
+- [Conference Exhibition](https://sites.google.com/cam.ac.uk/caa-uk25contact/home)
+
 ---
 
 ## Overview
@@ -42,7 +44,6 @@ Academic Papers (PDFs)
 **Conference Materials:**
 - [Abstract](https://drive.google.com/file/d/1zQ3-LrlsDmZiI1D3QkJo1lQ43e6MwYq1/view?usp=sharing)
 - [Presentation Slides](https://drive.google.com/file/d/1n79eqJ7XM3h3ftmJakhP5JOrqjONAnRE/view?usp=sharing)
-- [Conference Exhibition](https://sites.google.com/cam.ac.uk/caa-uk25contact/home)
 
 ---
 
