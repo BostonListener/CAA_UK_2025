@@ -35,11 +35,14 @@ Academic Papers (PDFs)
     [Your RL/ML Model]
 ```
 
+![CAA UK 2025 Conference](CAA_UK_2025.png)
+
 **Project Origins:** This work was developed as part of our participation in the [OpenAI to Z Challenge on Kaggle](https://www.kaggle.com/competitions/openai-to-z-challenge/overview), where we explored AI-powered archaeological discovery in the Amazon. Our competition writeup detailing the approach is available [here](https://www.kaggle.com/competitions/openai-to-z-challenge/writeups/bostonlistener_digitalarchaeology). The pipeline has since evolved into a comprehensive framework for digitizing archaeological knowledge and preparing it for machine learning applications. Our approach was presented at [CAA UK 2025](https://uk.caa-international.org/caa-uk-2025/) (Computer Applications and Quantitative Methods in Archaeology) held at the University of Cambridge, December 9-10, 2025.
 
 **Conference Materials:**
 - [Abstract](https://drive.google.com/file/d/1zQ3-LrlsDmZiI1D3QkJo1lQ43e6MwYq1/view?usp=sharing)
 - [Presentation Slides](https://drive.google.com/file/d/1n79eqJ7XM3h3ftmJakhP5JOrqjONAnRE/view?usp=sharing)
+- [Conference Exhibition](https://sites.google.com/cam.ac.uk/caa-uk25contact/home)
 
 ---
 
